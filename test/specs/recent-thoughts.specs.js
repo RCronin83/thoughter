@@ -22,22 +22,23 @@
       });
 
       it('should be a function', function(){
-        expect(window.thoughter.showRecent).to.be.a.function;
+        expect(window.thoughter.showRecent).to.be.a('function');
       });
 
-      it('should run the function', function(){
+      it('should create an article for every thought it is given', function(){
         window.thoughter.showRecent([
           {content:'This isnt easy', createTime: '09:00', id: 'Ryan'}
         ]);
-        let articles = document.querySelectorAll('main article');
+        let articles = document.querySelectorAll('main.recent article');
         expect(articles.length).to.equal(1);
       });
 
-      it('should handle an empty array', function(){
+      it('should handle an empty array by creating articles', function(){
         let result = window.thoughter.showRecent([]);
-        expect(window.thoughter.showRecent.length).to.equal(0);
+        let articles = document.querySelectorAll('main.recent article');
+        expect(articles.length).to.equal(0);
       });
-      
+
       it('should handle an array of objects that do not meet the criteria', function(){
         window.thoughter.showRecent([{content: 'ryan', number: 10 }]);
         let articles = document.querySelectorAll('main article');
