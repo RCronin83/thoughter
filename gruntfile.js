@@ -4,6 +4,15 @@ module.exports = function configuration(gruntConfig) {
 
     clean:['build/'],
 
+    concat: {
+      options: {
+        separator: ';',
+      },
+      dist: {
+        src: ['src/js/new-thought.js', 'src/js/recent-thoughts.js'],
+        dest: 'src/js/app.js',
+      }
+    },
 
     copy:{
       allHTML:{
@@ -20,12 +29,13 @@ module.exports = function configuration(gruntConfig) {
         files:[
           {
             cwd:'src/js',
-            src:['**/*.js'],
+            src:['app.js'],
             dest:'build/js/',
             expand:true
           }
         ]
       },
+
       allJQuery:{
         files:[
           {
@@ -80,5 +90,7 @@ module.exports = function configuration(gruntConfig) {
 
   require('load-grunt-tasks')(gruntConfig);
 
-  gruntConfig.registerTask('build', ['jshint','karma', 'clean', 'copy', 'sass']);
+  gruntConfig.loadNpmTasks('grunt-contrib-concat');
+
+  gruntConfig.registerTask('build', ['jshint','karma', 'clean', 'concat', 'copy', 'sass']);
 };
